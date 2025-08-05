@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - CyberCrypt{% endblock %}
+
+{% block content %}
+<div class="terminal-panel cybernetic holographic">
+    <h2 class="terminal-title typing-effect glitch" data-text="> CONTROL_PANEL">> CONTROL_PANEL</h2>
+    <p class="neural-text">Welcome back, {{ user.username }}. System status: <span style="color: var(--neon-green);">ONLINE</span></p>
+
+    <div class="button-group">
+        <a href="{% url 'channel_create' %}" class="btn holographic-btn magnetic">>> CREATE_CHANNEL</a>
+        <a href="{% url 'channel_join' %}" class="btn holographic-btn magnetic">>> JOIN_CHANNEL</a>
+        <a href="{% url 'encrypt' channel_id=0 %}" class="btn holographic-btn magnetic">>> ENCRYPT_DATA</a>
+        <a href="{% url 'decrypt' channel_id=0 %}" class="btn holographic-btn magnetic">>> DECRYPT_DATA</a>
+    </div>
+</div>
+
+<div class="terminal-panel cybernetic holographic">
+    <h2 class="terminal-title glitch" data-text="> YOUR_CHANNELS">> YOUR_CHANNELS</h2>
+    {% if user_channels %}
+        {% for channel in user_channels %}
+            <div class="channel-card cybernetic">
+                <h3 class="channel-name neural-text">{{ channel.name }}</h3>
+                <p>Status: {% if channel.creator == user %}OWNER{% else %}MEMBER{% endif %}</p>
+                <p>Created: {{ channel.created_at|date:"M d, Y" }}</p>
+                <button class="btn btn-secondary holographic-btn magnetic copy-btn" data-key="{{ channel.key }}">COPY_KEY</button>
+                <button class="btn btn-secondary holographic-btn magnetic qr-btn" data-key="{{ channel.key }}">SHOW_QR</button>
+                {% if channel.creator == user %}
+                    <button class="btn btn-secondary holographic-btn magnetic regen-btn">REGEN_KEY</button>
+                {% endif %}
+                <div class="qr-code" id="qr-{{ channel.id }}" style="display: none;"></div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert warning-box glitch">
+            <p>No channels found</p>
+            <p>Get started by creating or joining a channel.</p>
+        </div>
+    {% endif %}
+</div>
+
+<div class="terminal-panel cybernetic holographic hud-panel">
+    <h2 class="terminal-title glitch" data-text="> SYSTEM_DIAGNOSTICS">> SYSTEM_DIAGNOSTICS</h2>
+    <div class="info-grid">
+        <div class="diagnostic-meter">
+            <p>{{ user_channels.count }}</p>
+            <p>Active Channels</p>
+            <div class="progress-bar cybernetic"><div class="progress cybernetic" style="width: {{ user_channels.count|default:0|floatformat:0 }}%"></div></div>
+        </div>
+        <div class="diagnostic-meter">
+            <p>{{ user.last_login|date:"M d" }}</p>
+            <p>Last Access</p>
+            <div class="progress-bar cybernetic"><div class="progress cybernetic biometric-scan" style="width: 100%"></div></div>
+        </div>
+        <div class="diagnostic-meter">
+            <p style="color: var(--neon-green);">SECURE</p>
+            <p>Connection Status</p>
+            <div class="progress-bar cybernetic"><div class="progress cybernetic neural-pulse" style="width: 100%"></div></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

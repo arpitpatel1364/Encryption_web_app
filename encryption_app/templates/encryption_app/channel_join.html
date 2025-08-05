@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Join Channel - CyberCrypt{% endblock %}
+
+{% block content %}
+<div class="terminal-panel cybernetic holographic">
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary holographic-btn magnetic">← BACK_TO_DASHBOARD</a>
+    <h2 class="terminal-title typing-effect glitch" data-text="> JOIN_CHANNEL">> JOIN_CHANNEL</h2>
+    <p class="neural-text">Connect to an existing secure communication channel</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label neural-text">> CHANNEL_KEY</label>
+            <input type="text" name="channel_key" id="channel-key-input" class="form-control holographic" placeholder="Enter the secure key">
+            <p class="help-text neural-text">Enter the secure key provided by the channel creator.</p>
+        </div>
+        {% if form.errors %}
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <div class="alert warning-box glitch">ERROR: {{ error }}</div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <button type="submit" class="btn holographic-btn magnetic">>> JOIN_CHANNEL</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary holographic-btn magnetic">>> CANCEL</a>
+    </form>
+</div>
+
+<div class="terminal-panel cybernetic holographic">
+    <h2 class="terminal-title glitch" data-text="> QR_CODE_SCANNER">> QR_CODE_SCANNER</h2>
+    <p class="neural-text">Scan QR code to automatically fill the channel key</p>
+    <div class="qr-scanner">
+        <video id="qr-video" style="display: none;"></video>
+        <canvas id="qr-canvas"></canvas>
+    </div>
+    <button class="btn holographic-btn magnetic" id="start-qr">>> SCAN_QR_CODE</button>
+    <button class="btn btn-secondary holographic-btn magnetic" id="stop-qr">>> STOP_SCAN</button>
+</div>
+
+<div class="terminal-panel cybernetic holographic">
+    <h2 class="terminal-title glitch" data-text="> JOIN_INSTRUCTIONS">> JOIN_INSTRUCTIONS</h2>
+    <ul class="help-list neural-text">
+        <li>Get Channel Key: Ask the channel creator to share their unique key</li>
+        <li>Paste Key: Copy the key into the input field above</li>
+        <li>Scan QR: Use the QR scanner for quick access</li>
+        <li>Join Channel: Click "JOIN_CHANNEL" to gain access</li>
+        <li>Start Encrypting: Once joined, you can encrypt/decrypt messages</li>
+    </ul>
+    <div class="alert warning-box glitch">
+        <strong>⚠️ SECURITY_WARNING</strong>
+        <p>Only join channels from trusted sources. Never share channel keys in public forums or unsecured communications.</p>
+    </div>
+</div>
+{% endblock %}

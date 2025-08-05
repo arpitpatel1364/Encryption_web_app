@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create Channel - CyberCrypt{% endblock %}
+
+{% block content %}
+<div class="terminal-panel cybernetic holographic">
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary holographic-btn magnetic">← BACK_TO_DASHBOARD</a>
+    <h2 class="terminal-title typing-effect glitch" data-text="> CREATE_CHANNEL">> CREATE_CHANNEL</h2>
+    <p class="neural-text">Initialize a new secure communication channel</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label neural-text">> CHANNEL_NAME</label>
+            <input type="text" name="name" class="form-control holographic" placeholder="Enter channel name">
+            <p class="help-text neural-text">Channel names must be unique and contain only letters, numbers, and hyphens.</p>
+        </div>
+        {% if form.errors %}
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <div class="alert warning-box glitch">ERROR: {{ error }}</div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <button type="submit" class="btn holographic-btn magnetic">>> CREATE_CHANNEL</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary holographic-btn magnetic">>> CANCEL</a>
+    </form>
+</div>
+
+<div class="terminal-panel cybernetic holographic">
+    <h2 class="terminal-title glitch" data-text="> CHANNEL_INFO">> CHANNEL_INFO</h2>
+    <ul class="help-list neural-text">
+        <li>Access Control: Only users with the channel key can join and decrypt messages</li>
+        <li>Channel Owner: As creator, you can regenerate keys and manage access</li>
+        <li>Privacy: Messages are encrypted with channel-specific algorithms</li>
+        <li>Secure Key Generation: Each channel gets a unique cryptographic key</li>
+        <li>Custom Encryption: Your channel will have its own encryption mapping</li>
+    </ul>
+</div>
+{% endblock %}

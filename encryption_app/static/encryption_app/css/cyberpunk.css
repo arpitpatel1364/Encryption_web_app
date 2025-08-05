@@ -1,0 +1,379 @@
+/* Cyberpunk Encryption UI - Adapted from cyberpunk.css */
+
+/* ===== IMPORTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=VT323:wght@400&family=Fira+Code:wght@300;400;500;600&display=swap');
+
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+    /* Colors from Prompt */
+    --neon-green: #00ff41;
+    --hot-pink: #ff0080;
+    --electric-blue: #0080ff;
+    --primary-bg: #0a0a1a;
+    --secondary-bg: #1a1a2a;
+    --terminal-bg: #000000;
+    --border-color: #444444;
+
+    /* Accent Colors */
+    --glow-green: rgba(0, 255, 65, 0.3);
+    --glow-pink: rgba(255, 0, 128, 0.3);
+    --glow-blue: rgba(0, 128, 255, 0.3);
+    --danger-color: #ff0040;
+    --success-color: #00ff41;
+    --info-color: #0080ff;
+
+    /* Text Colors */
+    --text-primary: var(--neon-green);
+    --text-secondary: #99cc99;
+    --text-muted: #666666;
+
+    /* Effects */
+    --box-shadow: 0 0 25px var(--glow-green);
+    --transition: all 0.3s ease-in-out;
+    --glow-shadow: 0 0 15px var(--glow-green);
+    --text-shadow: 0 0 15px var(--glow-green), 0 0 5px var(--glow-pink);
+    --holo-border: 2px solid transparent;
+    --holo-gradient: linear-gradient(45deg, var(--neon-green), var(--hot-pink), var(--electric-blue)) border-box;
+
+    /* Spacing */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+
+    /* Border Radius */
+    --radius-sm: 5px;
+    --radius-md: 10px;
+}
+
+/* ===== RESET & BASE STYLES ===== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Circuit Board Background with Scan Lines */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.1"><path d="M0 0h100v100H0z" fill="none" stroke="#00ff41" stroke-width="0.5"/><path d="M10 10h80v80H10z" fill="none" stroke="#ff0080" stroke-width="0.5"/></svg>') repeat,
+                linear-gradient(rgba(0, 255, 65, 0.02) 1px, transparent 1px);
+    background-size: 100px 100px, 100% 2px;
+    animation: matrix-flicker 8s infinite;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.15;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes matrix-flicker {
+    0%, 100% { opacity: 0.15; }
+    10% { opacity: 0.2; }
+    20% { opacity: 0.1; }
+    30% { opacity: 0.18; }
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 3px); color: var(--hot-pink); }
+    40% { transform: translate(3px, -3px); color: var(--electric-blue); }
+    60% { transform: translate(-3px, 3px); color: var(--neon-green); }
+    80% { transform: translate(3px, -3px); color: var(--hot-pink); }
+    100% { transform: translate(0); color: var(--neon-green); }
+}
+
+@keyframes neon-flicker {
+    0% { text-shadow: var(--text-shadow); }
+    50% { text-shadow: 0 0 20px var(--glow-green), 0 0 10px var(--glow-pink); }
+    100% { text-shadow: var(--text-shadow); }
+}
+
+@keyframes pulse {
+    0% { box-shadow: var(--box-shadow); }
+    50% { box-shadow: 0 0 40px var(--glow-green), 0 0 20px var(--glow-pink); }
+    100% { box-shadow: var(--box-shadow); }
+}
+
+@keyframes plasma {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* ===== HEADER ===== */
+.navbar {
+    background: linear-gradient(90deg, var(--secondary-bg), rgba(0, 255, 65, 0.05));
+    border-bottom: 3px solid var(--hot-pink);
+    padding: var(--space-4) var(--space-6);
+    box-shadow: var(--box-shadow), 0 0 30px var(--glow-pink);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border: var(--holo-border);
+    background-clip: padding-box, border-box;
+    background-image: var(--holo-gradient);
+}
+
+.navbar-brand {
+    font-family: 'Fira Code', monospace;
+    font-size: 2rem;
+    color: var(--neon-green);
+    text-shadow: var(--text-shadow);
+    text-decoration: none;
+    animation: neon-flicker 1.5s infinite alternate;
+}
+
+.navbar-brand:hover {
+    animation: glitch 0.4s ease-in-out infinite;
+    color: var(--hot-pink);
+    text-shadow: 0 0 20px var(--glow-pink);
+}
+
+.navbar-nav {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.nav-link {
+    color: var(--electric-blue) !important;
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    padding: var(--space-2) var(--space-4);
+    text-decoration: none;
+    animation: neon-flicker 1.5s infinite alternate;
+}
+
+.nav-link:hover {
+    animation: glitch 0.4s ease-in-out infinite;
+    color: var(--neon-green) !important;
+    background: rgba(0, 255, 65, 0.15);
+    border-radius: var(--radius-sm);
+}
+
+/* ===== MAIN LAYOUT ===== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-4);
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    gap: var(--space-4);
+}
+
+.input-panel, .output-panel {
+    background: linear-gradient(135deg, var(--terminal-bg), rgba(0, 255, 65, 0.05));
+    border: 2px solid var(--neon-green);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    box-shadow: var(--glow-shadow);
+    border: var(--holo-border);
+    background-clip: padding-box, border-box;
+    background-image: var(--holo-gradient);
+}
+
+.control-panel {
+    background: linear-gradient(135deg, var(--secondary-bg), rgba(0, 255, 65, 0.05));
+    border: 2px solid var(--hot-pink);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    box-shadow: var(--glow-shadow);
+    border: var(--holo-border);
+    background-clip: padding-box, border-box;
+    background-image: var(--holo-gradient);
+}
+
+/* ===== FORM ELEMENTS ===== */
+.form-control, .terminal-input {
+    width: 100%;
+    padding: var(--space-3);
+    background: transparent;
+    border: 2px solid var(--electric-blue);
+    border-radius: var(--radius-sm);
+    color: var(--neon-green);
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    transition: var(--transition);
+    box-shadow: var(--glow-shadow);
+}
+
+.form-control:focus, .terminal-input:focus {
+    border-color: var(--hot-pink);
+    box-shadow: 0 0 20px var(--glow-pink);
+}
+
+.form-control::placeholder, .terminal-input::placeholder {
+    color: var(--text-muted);
+}
+
+.algorithm-selector {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6"><polyline points="0,0 6,6 12,0" fill="none" stroke="#00ff41"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right var(--space-3) center;
+    padding-right: var(--space-6);
+}
+
+/* Strength Indicator */
+.strength-indicator {
+    height: 8px;
+    background: linear-gradient(to right, var(--hot-pink), var(--neon-green), var(--electric-blue));
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-2);
+}
+
+/* ===== BUTTONS ===== */
+.terminal-btn, .btn {
+    padding: var(--space-3) var(--space-6);
+    background: transparent;
+    border: 3px solid var(--neon-green);
+    color: var(--neon-green);
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: var(--holo-border);
+    background-clip: padding-box, border-box;
+    background-image: var(--holo-gradient);
+}
+
+.terminal-btn:hover, .btn:hover {
+    animation: glitch 0.4s ease-in-out infinite;
+    background: var(--neon-green);
+    color: var(--terminal-bg);
+    box-shadow: 0 0 30px var(--glow-green);
+}
+
+.btn-encrypt { border-color: var(--neon-green); }
+.btn-encrypt:hover { background: var(--neon-green); color: var(--terminal-bg); }
+.btn-decrypt { border-color: var(--hot-pink); }
+.btn-decrypt:hover { background: var(--hot-pink); color: var(--terminal-bg); }
+.btn-generate-key { border-color: var(--electric-blue); }
+.btn-generate-key:hover { background: var(--electric-blue); color: var(--terminal-bg); }
+
+/* Floating Action Buttons */
+.floating-button {
+    position: fixed;
+    bottom: var(--space-4);
+    right: var(--space-4);
+    background: var(--hot-pink);
+    border: 2px solid var(--neon-green);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0 20px var(--glow-pink);
+    animation: pulse 1.5s infinite;
+}
+
+/* ===== FILE UPLOAD ZONE ===== */
+.file-upload {
+    border: 2px dashed var(--electric-blue);
+    padding: var(--space-6);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+
+.file-upload:hover {
+    border-color: var(--neon-green);
+    box-shadow: var(--glow-shadow);
+}
+
+/* ===== STATUS TERMINAL ===== */
+.status-terminal {
+    background: linear-gradient(135deg, var(--terminal-bg), rgba(0, 255, 65, 0.05));
+    border: 2px solid var(--electric-blue);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin: var(--space-4);
+    font-family: 'VT323', monospace;
+    color: var(--neon-green);
+    animation: typing 2s steps(30) infinite;
+    box-shadow: var(--glow-shadow);
+}
+
+/* Progress Indicator */
+.progress-indicator {
+    height: 10px;
+    background: linear-gradient(to right, var(--neon-green), var(--hot-pink));
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-indicator::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: plasma 1s infinite;
+}
+
+/* ===== NEURAL CONNECTIONS ===== */
+.neural-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><path d="M0 50h100" stroke="#00ff41" stroke-width="1" opacity="0.3"/><path d="M50 0v100" stroke="#ff0080" stroke-width="1" opacity="0.3"/></svg>') repeat;
+    opacity: 0.2;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        padding: var(--space-2);
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+    }
+
+    .terminal-btn, .btn {
+        padding: var(--space-2) var(--space-4);
+    }
+
+    .floating-button {
+        width: 50px;
+        height: 50px;
+    }
+}

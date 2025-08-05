@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Encrypt Message - CyberCrypt{% endblock %}
+
+{% block content %}
+<div class="terminal-panel cybernetic holographic">
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary holographic-btn magnetic">← BACK_TO_DASHBOARD</a>
+    <h2 class="terminal-title typing-effect glitch" data-text="> ENCRYPT_DATA">> ENCRYPT_DATA</h2>
+    <p class="neural-text">Encrypt a message for channel: {{ channel.name }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label neural-text">> MESSAGE</label>
+            <textarea name="message" class="form-control holographic" placeholder="Enter message to encrypt"></textarea>
+        </div>
+        {% if form.errors %}
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <div class="alert warning-box glitch">ERROR: {{ error }}</div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <button type="submit" class="btn holographic-btn magnetic">>> ENCRYPT</button>
+        <a href="{% url 'channel_messages' channel.id %}" class="btn btn-secondary holographic-btn magnetic">>> VIEW_MESSAGES</a>
+    </form>
+
+    {% if encrypted_result %}
+        <div class="result-panel cybernetic">
+            <h3 class="terminal-title glitch" data-text="> ENCRYPTION_RESULT">> ENCRYPTION_RESULT</h3>
+            <p class="neural-text">Original: {{ original_message }}</p>
+            <p class="neural-text">Encrypted: {{ encrypted_result }}</p>
+            <button class="btn btn-secondary holographic-btn magnetic copy-btn" data-key="{{ encrypted_result }}">COPY_RESULT</button>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

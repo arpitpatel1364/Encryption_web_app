@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Channel Messages - CyberCrypt{% endblock %}
+
+{% block content %}
+<div class="terminal-panel cybernetic holographic">
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary holographic-btn magnetic">← BACK_TO_DASHBOARD</a>
+    <h2 class="terminal-title typing-effect glitch" data-text="> CHANNEL_MESSAGES: {{ channel.name }}">> CHANNEL_MESSAGES: {{ channel.name }}</h2>
+    <p class="neural-text">Members: {{ channel.members.count }}</p>
+
+    <div class="button-group">
+        <a href="{% url 'encrypt' channel.id %}" class="btn holographic-btn magnetic">>> ENCRYPT_MESSAGE</a>
+        <a href="{% url 'decrypt' channel.id %}" class="btn holographic-btn magnetic">>> DECRYPT_MESSAGE</a>
+    </div>
+
+    <div class="terminal-panel cybernetic holographic activity-monitor">
+        <h3 class="terminal-title glitch" data-text="> ACTIVITY_MONITOR">> ACTIVITY_MONITOR</h3>
+        <div id="activity-log" class="neural-text"></div>
+    </div>
+
+    {% if messages %}
+        <div class="message-list cybernetic">
+            {% for message in messages %}
+                <div class="channel-card cybernetic neural-pulse">
+                    <p class="neural-text">Encrypted Data: {{ message.encrypted_data }}</p>
+                    <p class="neural-text">Created By: {{ message.created_by.username }}</p>
+                    <p class="neural-text">Created At: {{ message.created_at|date:"M d, Y H:i" }}</p>
+                    <button class="btn btn-secondary holographic-btn magnetic copy-btn" data-key="{{ message.encrypted_data }}">COPY_DATA</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert warning-box glitch">
+            <p>No messages found in this channel.</p>
+            <p>Start by encrypting a message.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

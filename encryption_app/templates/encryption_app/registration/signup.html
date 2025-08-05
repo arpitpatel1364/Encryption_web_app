@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - CyberCrypt{% endblock %}
+
+{% block content %}
+<div class="terminal-panel cybernetic holographic">
+    <h2 class="terminal-title typing-effect glitch" data-text="> REGISTER_SYSTEM">> REGISTER_SYSTEM</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label neural-text" for="username">> USERNAME</label>
+            <input type="text" name="username" id="username" class="form-control holographic" placeholder="Choose username">
+        </div>
+        <div class="form-group">
+            <label class="form-label neural-text" for="password1">> PASSWORD</label>
+            <input type="password" name="password1" id="password1" class="form-control holographic" placeholder="Enter password">
+        </div>
+        <div class="form-group">
+            <label class="form-label neural-text" for="password2">> CONFIRM_PASSWORD</label>
+            <input type="password" name="password2" id="password2" class="form-control holographic" placeholder="Confirm password">
+        </div>
+        {% if form.errors %}
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <div class="alert warning-box glitch">ERROR: {{ error }}</div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <button type="submit" class="btn holographic-btn magnetic">>> REGISTER</button>
+        <a href="{% url 'login' %}" class="btn btn-secondary holographic-btn magnetic">>> BACK_TO_LOGIN</a>
+    </form>
+</div>
+{% endblock %}

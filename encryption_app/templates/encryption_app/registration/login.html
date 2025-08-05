@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CyberCrypt{% endblock %}</title>
+    {% load static %}
+    {% block static_files %}
+        <link rel="stylesheet" href="{% static 'css/cyberpunk.css' %}">
+{#        <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>#}
+        <script src="{% static 'js/theme-toggle.js' %}" defer></script>
+        <script src="{% static 'js/matrix.js' %}" defer></script>
+        <script src="{% static 'js/effects.js' %}" defer></script>
+        <script src="{% static 'js/qr-scanner.js' %}" defer></script>
+    {% endblock %}
+</head>
+<body>
+    <div class="matrix-bg" id="matrix-canvas"></div>
+    <div class="scan-lines"></div>
+    <div class="holographic-overlay"></div>
+    <div class="particle-container"></div>
+    <div class="film-grain"></div>
+    <nav class="navbar cybernetic">
+        <div class="container">
+            <a class="navbar-brand glitch" href="{% url 'dashboard' %}">CyberCrypt Terminal</a>
+            <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <a class="nav-link cybernetic holographic" href="{% url 'dashboard' %}">Dashboard</a>
+                    <a class="nav-link cybernetic holographic" href="{% url 'channel_create' %}">Create Channel</a>
+                    <a class="nav-link cybernetic holographic" href="{% url 'channel_join' %}">Join Channel</a>
+                    <a class="nav-link cybernetic holographic" href="{% url 'help' %}">Help</a>
+                    <a class="nav-link cybernetic holographic" href="{% url 'logout' %}">Logout ({{ user.username }})</a>
+                {% else %}
+                    <a class="nav-link cybernetic holographic" href="{% url 'login' %}">Login</a>
+                    <a class="nav-link cybernetic holographic" href="{% url 'signup' %}">Sign Up</a>
+                    <a class="nav-link cybernetic holographic" href="{% url 'help' %}">Help</a>
+                {% endif %}
+                <label class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="theme-slider magnetic"></span>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert cybernetic glitch">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <audio id="click-sound" src="{% static 'sounds/click.mp3' %}" preload="auto"></audio>
+    <audio id="glitch-sound" src="{% static 'sounds/glitch.mp3' %}" preload="auto"></audio>
+    <audio id="ambient-sound" src="{% static 'sounds/ambient.mp3' %}" loop preload="auto"></audio>
+    <audio id="beep-sound" src="{% static 'sounds/beep.mp3' %}" preload="auto"></audio>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Decrypt Message - CyberCrypt{% endblock %}
+
+{% block content %}
+<div class="terminal-panel cybernetic holographic">
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary holographic-btn magnetic">← BACK_TO_DASHBOARD</a>
+    <h2 class="terminal-title typing-effect glitch" data-text="> DECRYPT_DATA">> DECRYPT_DATA</h2>
+    <p class="neural-text">Decrypt a message for channel: {{ channel.name }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label neural-text手工
+
+System: * Today's date and time is 11:36 PM IST on Wednesday, July 16, 2025.
+
+I'm sorry, but it seems like your message was cut off. You mentioned wanting to "max and enhance" the design of your Django-based encryption web app with a comprehensive list of cyberpunk elements and new features. I've already provided a detailed response with updated templates, static files, and new features like a QR code scanner, real-time channel activity monitoring, and a cybernetic HUD overlay, all integrated with a Cyberpunk theme. However, it appears you were in the middle of providing additional details or code, as the `decrypt.html` file was incomplete.
+
+To proceed, I'll assume you want to continue with the provided design enhancements and complete the `decrypt.html` template, incorporating the maximum cyberpunk elements (visual effects, interactive elements, animations, audio, typography, and UI components) and ensuring compatibility with your backend. I'll also include the new static files (`effects.js`, `qr-scanner.js`, audio files) and WebSocket-related files (`consumers.py`, `routing.py`, `asgi.py`) to support the real-time channel activity feature. Additionally, I'll address any potential changes to the project structure and provide instructions for implementation.
+
+### Completed `decrypt.html`
+
+<xaiArtifact artifact_id="7ef5b9e0-7415-4eed-9c53-b2d21ad1ac83" artifact_version_id="0f4e781f-9404-496e-9037-a6f2926c5779" title="decrypt.html" contentType="text/html">
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Decrypt Message - CyberCrypt{% endblock %}
+
+{% block content %}
+<div class="terminal-panel cybernetic holographic">
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary holographic-btn magnetic">← BACK_TO_DASHBOARD</a>
+    <h2 class="terminal-title typing-effect glitch" data-text="> DECRYPT_DATA">> DECRYPT_DATA</h2>
+    <p class="neural-text">Decrypt a message for channel: {{ channel.name }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label neural-text">> SECRET_KEY</label>
+            <textarea name="secret_key" id="secret-key-input" class="form-control holographic" placeholder="Enter the encrypted key"></textarea>
+            <p class="help-text neural-text">Paste the encrypted key to decrypt the message.</p>
+        </div>
+        {% if form.errors %}
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <div class="alert warning-box glitch">ERROR: {{ error }}</div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <button type="submit" class="btn holographic-btn magnetic">>> DECRYPT</button>
+        <a href="{% url 'channel_messages' channel.id %}" class="btn btn-secondary holographic-btn magnetic">>> VIEW_MESSAGES</a>
+    </form>
+
+    {% if decrypted_result %}
+        <div class="result-panel cybernetic">
+            <h3 class="terminal-title glitch" data-text="> DECRYPTION_RESULT">> DECRYPTION_RESULT</h3>
+            <p class="neural-text">Decrypted Message: {{ decrypted_result }}</p>
+            <p class="neural-text">Secret Key: {{ secret_key }}</p>
+            <button class="btn btn-secondary holographic-btn magnetic copy-btn" data-key="{{ decrypted_result }}">COPY_RESULT</button>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
